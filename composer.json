@@ -1,0 +1,20 @@
+{
+  "name": "devsofpixel7/ejabberd",
+  "description": "Ejabbered API Wrapper",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "devsofpixel7",
+      "email": "me@pxl7.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ejabberd\\": "src"
+    }
+  },
+  "minimum-stability": "dev"
+}

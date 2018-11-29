@@ -1,6 +1,12 @@
 <?php
+/**
+ * ejabberd package file
+ * User: hervie
+ * Date: 29/11/2018
+ * Time: 4:02 PM
+ */
 
-namespace App;
+namespace Ejabberd;
 
 class Ejabberd
 {
