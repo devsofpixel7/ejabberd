@@ -11,6 +11,22 @@ namespace Ejabberd;
 class Ejabberd
 {
 
+
+    static function usersConnectedNumber()
+    {
+        return self::CallApi('GET', env('EJABBERD_API').'connected_users_number');
+    }
+
+    static function usersConnectedInfo()
+    {
+        return self::CallApi('GET', env('EJABBERD_API').'connected_users_info');
+    }
+
+    static function usersConnected()
+    {
+        return self::CallApi('GET', env('EJABBERD_API').'connected_users');
+    }
+
     // Method: POST, PUT, GET etc
     // Data: array("param" => "value") ==> index.php?param=value
 
@@ -35,12 +51,6 @@ class Ejabberd
         }
 
 
-        // Optional Authentication if server requires one:
-        /*
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($curl, CURLOPT_USERPWD, "username:password");
-        */
-
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
@@ -56,31 +66,7 @@ class Ejabberd
 
         curl_close($curl);
 
-
-        //return response()->json(json_decode($result, JSON_UNESCAPED_SLASHES));
         return $response;
-
-        /*
-        return response()->json(
-            [
-                'error' => [
-                    'code' => $rendered->getStatusCode(),
-                    'message' => $e->getMessage(),
-                ]
-            ],
-            $rendered->getStatusCode());
-            */
-
-        /*
-        return response()->json(
-            [
-                'result' => [
-                    $result
-                ]
-            ]);
-        */
-
-
 
     }
 
