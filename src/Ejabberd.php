@@ -66,7 +66,6 @@ class Ejabberd implements JsonSerializable
         return $this->execute($sendMessage);
     }
 
-
     public function usersConnectedNumber()
     {
         return self::callApi('GET', 'connected_users_number', '', 'usersConnectedNumber');
@@ -87,44 +86,6 @@ class Ejabberd implements JsonSerializable
         return self::callApi('GET', 'muc_online_rooms?host='.$this->domain, '', 'muc_online_rooms');
     }
 
-    /**
-     * @param IEjabberdCommand $command
-     * @return null|\Psr\Http\Message\StreamInterface
-     */
-    public function execute(IEjabberdCommand $command)
-    {
-        $client = new Client([
-            'verify' => false,
-            'base_uri' => $this->api
-        ]);
-        $command_name = $command->getCommandName();
-        try {
-            $response = $client->request('POST', $command_name, [
-                'headers' => [
-                    'Accept' => 'application/json',
-                ],
-                'auth' => [
-                    $this->user, $this->password
-                ],
-                'json' => $command->getCommandData()
-            ]);
-            if ($this->debug) {
-                Log::info($command->getCommandName() . 'executed successfully.');
-            }
-            return $response->getBody();
-
-        } catch (GuzzleException $e) {
-            if ($this->debug) {
-                Log::info("Error occurred while executing the command " . $command->getCommandName() . ".");
-            }
-            return null;
-        } catch (\Exception $e) {
-            if ($this->debug) {
-                Log::info("Error occurred while executing the command " . $command->getCommandName() . ".");
-            }
-            return null;
-        }
-    }
 
     /**
      * @param IEjabberdCommand $command
