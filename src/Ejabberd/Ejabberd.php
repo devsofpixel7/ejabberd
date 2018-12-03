@@ -17,6 +17,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use JsonSerializable;
 use Illuminate\Support\Facades\Log;
+use Ejabberd\Handler;
 
 class Ejabberd implements JsonSerializable
 {
@@ -97,7 +98,6 @@ class Ejabberd implements JsonSerializable
         return self::callApi('POST', 'get_room_occupants', ['name' => $room, 'service' => $this->conference_domain], 'roomOccupants');
     }
 
-
     public function roomOccupantsNumber($room)
     {
         return self::callApi('POST', 'get_room_occupants_number', ['name' => $room, 'service' => $this->conference_domain], 'roomOccupantsNumber');
@@ -163,14 +163,18 @@ class Ejabberd implements JsonSerializable
 
         } catch (ClientException $e) {
             if ($this->debug=='true') {
+               Log::info("Error occurred while executing the command " . $command . " with data: '".$data."', on url: ".$url.".");
+            }
 
-               Log::info("Error occurred while executing the command " . $command . ", on url:".$url.".");
-               return json_decode($e->getResponse()->getBody(true), JSON_PRETTY_PRINT);
+            return \Ejabberd\Handler::response(json_decode($e->getResponse()->getBody(true)));
 
+        } catch (\Exception $e) {
+            if ($this->debug) {
+               Log::info("Error occurred while executing the command " . $command . " with data: '".$data."', on url: ".$url.".");
             }
             return null;
         }
-
+        
     }
 
     /**

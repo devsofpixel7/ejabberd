@@ -15,7 +15,7 @@ composer require devsofpixel7/ejabberd
 Add to your .env file:
 ```
 EJABBERD_API=http://url-of-your-ejabberd-server:5280/api/
-EJABBERD_DOMAIN=http://url-of-your-ejabberd-server
+EJABBERD_DOMAIN=url-of-your-ejabberd-server
 EJABBERD_CONFERENCE_DOMAIN=conference-domain-prefix
 EJABBERD_USER=ejabberd-username
 EJABBERD_PASSWORD=ejabberd-password
