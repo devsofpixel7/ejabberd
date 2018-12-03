@@ -28,3 +28,4 @@ $ej = New Ejabberd();
 $response = $ej->usersConnectedInfo();
 return $response;
 ```
+
