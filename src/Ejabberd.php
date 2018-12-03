@@ -95,11 +95,27 @@ class Ejabberd implements JsonSerializable
         return self::callApi('POST', 'get_room_occupants', ['name' => $room, 'service' => $this->conference_domain], 'roomOccupants');
     }
 
-
     public function roomOccupantsNumber($room)
     {
         return self::callApi('POST', 'get_room_occupants_number', ['name' => $room, 'service' => $this->conference_domain], 'roomOccupantsNumber');
     }
+
+    public function userAccountCheck($username)
+    {
+        return self::callApi('GET', 'check_account?user='.$username.'&host='.$this->domain, '', 'userAccountCheck');
+    }
+
+    public function userLastActivity($username)
+    {
+        return self::callApi('GET', 'get_last?user='.$username.'&host='.$this->domain, '', 'userLastActivity');
+    }
+
+    public function userSessionsInfo($username)
+    {
+        return self::callApi('GET', 'user_sessions_info?user='.$username.'&host='.$this->domain, '', 'userSessionsInfo');
+    }
+
+
 
     /**
      * @param IEjabberdCommand $command
@@ -157,7 +173,7 @@ class Ejabberd implements JsonSerializable
                 'json' => $data
             ]);
 
-            return json_decode($res->getBody(), JSON_PRETTY_PRINT);
+            return \Ejabberd\Handler::regularResponse(json_decode($res->getBody(), JSON_PRETTY_PRINT));
 
         } catch (ClientException $e) {
             if ($this->debug=='true') {
@@ -166,7 +182,7 @@ class Ejabberd implements JsonSerializable
 
             }
             
-            return \Ejabberd\Handler::response(json_decode($e->getResponse()->getBody(true)));
+            return \Ejabberd\Handler::noContentResponse(json_decode($e->getResponse()->getBody(true)));
         }
 
     }

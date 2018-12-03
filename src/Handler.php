@@ -39,12 +39,32 @@ class Handler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public static function response($response)
+    public static function noContentResponse($response)
     {
 
         return response()->json(
             [
                 'no_content' => [
+                    'code' => 200,
+                    'message' => $response,
+                ]
+            ]);
+
+    }
+
+    /**
+     * Render a regular response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception  $exception
+     * @return \Illuminate\Http\Response
+     */
+    public static function regularResponse($response)
+    {
+
+        return response()->json(
+            [
+                'response' => [
                     'code' => 200,
                     'message' => $response,
                 ]
