@@ -46,7 +46,7 @@ class Handler
             [
                 'no_content' => [
                     'code' => 200,
-                    'message' => $response,
+                    'data' => $response,
                 ]
             ]);
 
@@ -66,7 +66,7 @@ class Handler
             [
                 'response' => [
                     'code' => 200,
-                    'message' => $response,
+                    'data' => $response,
                 ]
             ]);
 

@@ -38,6 +38,8 @@ class Ejabberd implements JsonSerializable
 
     }
 
+
+
     /**
      * @param IEjabberdCommand $command
      */
@@ -63,6 +65,7 @@ class Ejabberd implements JsonSerializable
     {
         return $this->execute($sendMessage);
     }
+
 
 
     public function usersConnectedNumber()
@@ -115,6 +118,15 @@ class Ejabberd implements JsonSerializable
         return self::callApi('GET', 'user_sessions_info?user='.$username.'&host='.$this->domain, '', 'userSessionsInfo');
     }
 
+    public function userRegister($username, $password)
+    {
+        return self::callApi('GET', 'register?user='.$username.'&password='.$password.'&host='.$this->domain, '', 'userRegister');
+    }
+
+    public function userUnregister($username)
+    {
+        return self::callApi('GET', 'unregister?user='.$username.'&host='.$this->domain, '', 'userUnegister');
+    }
 
 
     /**
@@ -177,11 +189,9 @@ class Ejabberd implements JsonSerializable
 
         } catch (ClientException $e) {
             if ($this->debug=='true') {
-
                Log::info("Error occurred while executing the command " . $command . ", on url:".$url.".");
-
             }
-            
+
             return \Ejabberd\Handler::noContentResponse(json_decode($e->getResponse()->getBody(true)));
         }
 
