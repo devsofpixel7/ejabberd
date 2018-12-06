@@ -72,4 +72,35 @@ class Handler
 
     }
 
+
+
+    /**
+     * Render a database exception response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception  $exception
+     * @return \Illuminate\Http\Response
+     */
+    public static function queryExceptionResponse($response)
+    {
+
+        switch($response) {
+
+            case 23505:
+                return response()->json(
+                [
+                    'error' => [
+                        'code' => 422,
+                        'message' => 'Entry already exists.'
+                    ]
+                ], 422);
+                break;
+
+
+        }
+
+
+
+    }
+
 }
