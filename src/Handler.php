@@ -72,6 +72,26 @@ class Handler
 
     }
 
+    /**
+     * Render an extended response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception  $exception
+     * @return \Illuminate\Http\Response
+     */
+    public static function extendedResponse($dbResponse, $ejResponse)
+    {
+
+        return response()->json(
+            [
+                'response' => [
+                    'code' => 200,
+                    'data' => $dbResponse,
+                    'message' => $ejResponse
+                ]
+            ]);
+
+    }
 
 
     /**
