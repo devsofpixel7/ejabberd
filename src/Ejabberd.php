@@ -37,9 +37,7 @@ class Ejabberd implements JsonSerializable
         $this->debug = env('EJABBERD_DEBUG');
 
     }
-
-
-
+    
     /**
      * @param IEjabberdCommand $command
      */
@@ -128,6 +126,15 @@ class Ejabberd implements JsonSerializable
         return self::callApi('GET', 'unregister?user='.$username.'&host='.$this->domain, '', 'userUnegister');
     }
 
+    public function userRooms($username)
+    {
+        return self::callApi('GET', 'get_user_rooms?user='.$username.'&host='.$this->domain, '', 'userRooms');
+    }
+
+    public function usersRegistered()
+    {
+        return self::callApi('GET', 'registered_users?host='.$this->domain, '', 'usersRegistered');
+    }
 
     /**
      * @param IEjabberdCommand $command

@@ -7,14 +7,13 @@ class Exception
     /**
      * Render a database exception response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
     public static function queryException($response)
     {
-
-        switch($response) {
+        switch ($response) {
 
             case 23505:
                 return response()->json(
@@ -37,31 +36,60 @@ class Exception
                 break;
         }
 
-
-
     }
-
-
+    
     /**
      * Render a database exception response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
     public static function validationException($response)
     {
-
-
-                return response()->json(
-                    [
-                        'error' => [
-                            'code' => 422,
-                            'message' => $response
-                        ]
-                    ], 422);
-                
+        return response()->json(
+            [
+                'error' => [
+                    'code' => 422,
+                    'message' => $response
+                ]
+            ], 422);
     }
 
+    /**
+     * Render a user exists exception response.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
+     * @return \Illuminate\Http\Response
+     */
+    public static function usernameExistsException()
+    {
+        return response()->json(
+            [
+                'error' => [
+                    'code' => 422,
+                    'message' => 'Username already exists.'
+                ]
+            ], 422);
+    }
+
+    /**
+     * Render a user doesn't exists exception response.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
+     * @return \Illuminate\Http\Response
+     */
+    public static function usernameDoesntExistsException()
+    {
+        return response()->json(
+            [
+                'error' => [
+                    'code' => 422,
+                    'message' => "Username doesn't exist."
+                ]
+            ], 422);
+    }
 
 }
