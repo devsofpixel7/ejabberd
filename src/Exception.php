@@ -74,6 +74,7 @@ class Exception
             ], 422);
     }
 
+
     /**
      * Render a user doesn't exists exception response.
      *
@@ -88,6 +89,42 @@ class Exception
                 'error' => [
                     'code' => 422,
                     'message' => "Username doesn't exist."
+                ]
+            ], 422);
+    }
+
+    /**
+     * Render a room exists exception response.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
+     * @return \Illuminate\Http\Response
+     */
+    public static function roomExistsException()
+    {
+        return response()->json(
+            [
+                'error' => [
+                    'code' => 422,
+                    'message' => 'Room already exists.'
+                ]
+            ], 422);
+    }
+
+    /**
+     * Render a room doesn't exists exception response.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
+     * @return \Illuminate\Http\Response
+     */
+    public static function roomDoesntExistException()
+    {
+        return response()->json(
+            [
+                'error' => [
+                    'code' => 422,
+                    'message' => 'Room doesnt exist.'
                 ]
             ], 422);
     }

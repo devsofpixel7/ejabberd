@@ -64,7 +64,25 @@ class Ejabberd implements JsonSerializable
         return $this->execute($sendMessage);
     }
 
+    public function roomOccupantsNumber($room)
+    {
+        return self::callApi('POST', 'get_room_occupants_number', ['name' => $room, 'service' => $this->conference_domain], 'roomOccupantsNumber');
+    }
 
+    public function roomCreate($room)
+    {
+        return self::callApi('GET', 'create_room?name='.$room.'&service='.$this->conference_domain.'&host='.$this->domain,'','roomCreate');
+    }
+
+    public function roomDestroy($room)
+    {
+        return self::callApi('GET', 'destroy_room?name='.$room.'&service='.$this->conference_domain,'','roomDestroy');
+    }
+
+    public function roomOptions($room)
+    {
+        return self::callApi('GET', 'get_room_options?name='.$room.'&service='.$this->conference_domain,'','roomOptions');
+    }
 
     public function usersConnectedNumber()
     {
@@ -94,11 +112,6 @@ class Ejabberd implements JsonSerializable
     public function roomOccupants($room)
     {
         return self::callApi('POST', 'get_room_occupants', ['name' => $room, 'service' => $this->conference_domain], 'roomOccupants');
-    }
-
-    public function roomOccupantsNumber($room)
-    {
-        return self::callApi('POST', 'get_room_occupants_number', ['name' => $room, 'service' => $this->conference_domain], 'roomOccupantsNumber');
     }
 
     public function userAccountCheck($username)
