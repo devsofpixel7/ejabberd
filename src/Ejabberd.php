@@ -129,9 +129,14 @@ class Ejabberd implements JsonSerializable
         return self::callApi('GET', 'user_sessions_info?user='.$username.'&host='.$this->domain, '', 'userSessionsInfo');
     }
 
-    public function userRegister($username, $password)
+    public function userRegisterOld($username, $password)
     {
         return self::callApi('GET', 'register?user='.$username.'&password='.$password.'&host='.$this->domain,'','userRegister');
+    }
+
+    public function userRegister($username, $password)
+    {
+        return self::callApi('POST', 'register',['user'=> $username, 'password'=>$password, 'host'=>$this->domain],'userRegister');
     }
 
     public function userUnregister($username)
