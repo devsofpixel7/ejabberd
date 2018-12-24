@@ -64,94 +64,162 @@ class Ejabberd implements JsonSerializable
         return $this->execute($sendMessage);
     }
 
+    /**
+     * @param $room
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function roomOccupantsNumber($room)
     {
         return self::callApi('POST', 'get_room_occupants_number', ['name' => $room, 'service' => $this->conference_domain], 'roomOccupantsNumber');
     }
 
+    /**
+     * @param $room
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function roomCreate($room)
     {
-        return self::callApi('GET', 'create_room?name='.$room.'&service='.$this->conference_domain.'&host='.$this->domain,'','roomCreate');
+        return self::callApi('POST', 'create_room', $data = [ 'room' => $room, 'service' => $this->conference_domain, 'host' => $this->domain],'roomCreate');
     }
 
+    /**
+     * @param $room
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function roomDestroy($room)
     {
-        return self::callApi('GET', 'destroy_room?name='.$room.'&service='.$this->conference_domain,'','roomDestroy');
+        return self::callApi('POST', 'destroy_room', $data = [ 'name' => $room, 'service' => $this->conference_domain], 'roomDestroy');
     }
 
+    /**
+     * @param $room
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function roomOptions($room)
     {
-        return self::callApi('GET', 'get_room_options?name='.$room.'&service='.$this->conference_domain,'','roomOptions');
+        return self::callApi('POST', 'get_room_options', $data = [ 'name' => $room, 'service' => $this->conference_domain] ,'roomOptions');
     }
 
+    /**
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function usersConnectedNumber()
     {
         return self::callApi('GET', 'connected_users_number', '', 'usersConnectedNumber');
     }
 
+    /**
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function usersConnectedInfo()
     {
         return self::callApi('GET', 'connected_users_info', '', 'usersConnectedInfo');
     }
 
+    /**
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function usersConnected()
     {
         return self::callApi( 'GET', 'connected_users', '', 'usersConnected');
     }
 
+    /**
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function roomsList()
     {
         return self::callApi('GET', 'muc_online_rooms?host='.$this->domain, '', 'roomsList');
     }
 
+    /**
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function roomsDetails()
     {
-        return self::callApi('GET', 'muc_online_rooms_by_regex?host='.$this->domain, '', 'roomsDetails');
+        return self::callApi('POST', 'muc_online_rooms_by_regex', $data = [ 'host' => $this->domain ], 'roomsDetails');
     }
 
+    /**
+     * @param $room
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function roomOccupants($room)
     {
         return self::callApi('POST', 'get_room_occupants', ['name' => $room, 'service' => $this->conference_domain], 'roomOccupants');
     }
 
+    /**
+     * @param $username
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function userAccountCheck($username)
     {
-        return self::callApi('GET', 'check_account?user='.$username.'&host='.$this->domain, '', 'userAccountCheck');
+        return self::callApi('POST', 'check_account', $data = [ 'user' => $username, 'host' => $this->domain ], 'userAccountCheck');
     }
 
+    /**
+     * @param $username
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function userLastActivity($username)
     {
-        return self::callApi('GET', 'get_last?user='.$username.'&host='.$this->domain, '', 'userLastActivity');
+        return self::callApi('POST', 'get_last?user='.$username.'&host='.$this->domain, '', 'userLastActivity');
     }
 
+    /**
+     * @param $username
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function userSessionsInfo($username)
     {
-        return self::callApi('GET', 'user_sessions_info?user='.$username.'&host='.$this->domain, '', 'userSessionsInfo');
+        return self::callApi('POST', 'user_sessions_info', $data = [ 'user' => $username , 'host' => $this->domain], 'userSessionsInfo');
     }
 
+    /**
+     * @param $username
+     * @param $password
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function userRegisterOld($username, $password)
     {
         return self::callApi('GET', 'register?user='.$username.'&password='.$password.'&host='.$this->domain,'','userRegister');
     }
 
+    /**
+     * @param $username
+     * @param $password
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function userRegister($username, $password)
     {
         return self::callApi('POST', 'register',['user'=> $username, 'password'=>$password, 'host'=>$this->domain],'userRegister');
     }
 
+    /**
+     * @param $username
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function userUnregister($username)
     {
-        return self::callApi('GET', 'unregister?user='.$username.'&host='.$this->domain, '', 'userUnegister');
+        return self::callApi('POST', 'unregister', $data = [ 'user' => $username, 'host' => $this->domain ],  'userUnegister');
     }
 
+    /**
+     * @param $username
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function userRooms($username)
     {
-        return self::callApi('GET', 'get_user_rooms?user='.$username.'&host='.$this->domain, '', 'userRooms');
+        return self::callApi('POST', 'get_user_rooms', $data = ['user' => $username, 'host' => $this->domain, 'userRooms');
     }
 
+    /**
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
     public function usersRegistered()
     {
-        return self::callApi('GET', 'registered_users?host='.$this->domain, '', 'usersRegistered');
+        return self::callApi('POST', 'registered_users', $data = [ 'host' => $this->domain ], 'usersRegistered');
     }
 
     /**
@@ -166,13 +234,16 @@ class Ejabberd implements JsonSerializable
         ]);
         $command_name = $command->getCommandName();
         try {
+
             $response = $client->request('POST', $command_name, [
                 'headers' => [
                     'Accept' => 'application/json',
                 ],
+                /*
                 'auth' => [
                     $this->user, $this->password
                 ],
+                */
                 'json' => $command->getCommandData()
             ]);
             if ($this->debug) {
@@ -197,7 +268,7 @@ class Ejabberd implements JsonSerializable
      * @param IEjabberdCommand $command
      * @return null|\Psr\Http\Message\StreamInterface
      */
-    public function callApi($method, $url, $data = false, $command)
+    public function callApi($method, $url, $data , $command)
     {
         $client = new \GuzzleHttp\Client();
 
