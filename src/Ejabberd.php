@@ -70,7 +70,7 @@ class Ejabberd implements JsonSerializable
      */
     public function roomOccupantsNumber($room)
     {
-        return self::callApi('POST', 'get_room_occupants_number', ['name' => $room, 'service' => $this->conference_domain], 'roomOccupantsNumber');
+        return self::callApi('POST', 'get_room_occupants_number', $data = ['name' => $room, 'service' => $this->conference_domain], 'roomOccupantsNumber');
     }
 
     /**
@@ -137,7 +137,7 @@ class Ejabberd implements JsonSerializable
      */
     public function roomsDetails()
     {
-        return self::callApi('POST', 'muc_online_rooms_by_regex', $data = [ 'host' => $this->domain ], 'roomsDetails');
+        return self::callApi('POST', 'muc_online_rooms_by_regex', $data = ['host' => $this->domain], 'roomsDetails');
     }
 
     /**
@@ -146,7 +146,7 @@ class Ejabberd implements JsonSerializable
      */
     public function roomOccupants($room)
     {
-        return self::callApi('POST', 'get_room_occupants', ['name' => $room, 'service' => $this->conference_domain], 'roomOccupants');
+        return self::callApi('POST', 'get_room_occupants', $data = ['name' => $room, 'service' => $this->conference_domain], 'roomOccupants');
     }
 
     /**
@@ -155,7 +155,7 @@ class Ejabberd implements JsonSerializable
      */
     public function userAccountCheck($username)
     {
-        return self::callApi('POST', 'check_account', $data = [ 'user' => $username, 'host' => $this->domain ], 'userAccountCheck');
+        return self::callApi('POST', 'check_account', $data = ['user' => $username, 'host' => $this->domain], 'userAccountCheck');
     }
 
     /**
@@ -164,7 +164,7 @@ class Ejabberd implements JsonSerializable
      */
     public function userLastActivity($username)
     {
-        return self::callApi('POST', 'get_last?user='.$username.'&host='.$this->domain, '', 'userLastActivity');
+        return self::callApi('POST', 'get_last', $data = ['user' => $username, 'host' => $this->domain], 'userLastActivity');
     }
 
     /**
@@ -173,7 +173,7 @@ class Ejabberd implements JsonSerializable
      */
     public function userSessionsInfo($username)
     {
-        return self::callApi('POST', 'user_sessions_info', $data = [ 'user' => $username , 'host' => $this->domain], 'userSessionsInfo');
+        return self::callApi('POST', 'user_sessions_info', $data = ['user' => $username , 'host' => $this->domain], 'userSessionsInfo');
     }
 
     /**
@@ -193,7 +193,7 @@ class Ejabberd implements JsonSerializable
      */
     public function userRegister($username, $password)
     {
-        return self::callApi('POST', 'register',['user'=> $username, 'password'=>$password, 'host'=>$this->domain],'userRegister');
+        return self::callApi('POST', 'register', $data = ['user'=> $username, 'password'=>$password, 'host'=>$this->domain],'userRegister');
     }
 
     /**
@@ -202,7 +202,7 @@ class Ejabberd implements JsonSerializable
      */
     public function userUnregister($username)
     {
-        return self::callApi('POST', 'unregister', $data = [ 'user' => $username, 'host' => $this->domain ],  'userUnegister');
+        return self::callApi('POST', 'unregister', $data = ['user' => $username, 'host' => $this->domain],  'userUnegister');
     }
 
     /**
@@ -211,7 +211,7 @@ class Ejabberd implements JsonSerializable
      */
     public function userRooms($username)
     {
-        return self::callApi('POST', 'get_user_rooms', $data = ['user' => $username, 'host' => $this->domain, 'userRooms');
+        return self::callApi('POST', 'get_user_rooms', $data = ['user' => $username, 'host' => $this->domain], 'userRooms');
     }
 
     /**
@@ -219,7 +219,7 @@ class Ejabberd implements JsonSerializable
      */
     public function usersRegistered()
     {
-        return self::callApi('POST', 'registered_users', $data = [ 'host' => $this->domain ], 'usersRegistered');
+        return self::callApi('POST', 'registered_users', $data = ['host' => $this->domain], 'usersRegistered');
     }
 
     /**
