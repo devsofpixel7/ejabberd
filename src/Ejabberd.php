@@ -79,7 +79,7 @@ class Ejabberd implements JsonSerializable
      */
     public function roomCreate($room)
     {
-        return self::callApi('POST', 'create_room', ['room' => $room, 'service' => $this->conference_domain, 'host' => $this->domain],'roomCreate');
+        return self::callApi('POST', 'create_room', ['name' => $room, 'service' => $this->conference_domain, 'host' => $this->domain],'roomCreate');
     }
 
     /**
