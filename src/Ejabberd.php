@@ -222,6 +222,18 @@ class Ejabberd implements JsonSerializable
         return self::callApi('POST', 'registered_users', ['host' => $this->domain], 'usersRegistered');
     }
 
+
+    /**
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
+    public function roomInviteUsers($roomName, $inviteReason, $users)
+    {
+        return self::callApi('POST', 'send_direct_invitation', ['name' => $roomName, 'service' => $this->conference_domain, 'password' => '', 'reason' => $inviteReason, 'users' => $users], 'roomInviteUsers');
+    }
+
+
+
+
     /**
      * @param IEjabberdCommand $command
      * @return null|\Psr\Http\Message\StreamInterface

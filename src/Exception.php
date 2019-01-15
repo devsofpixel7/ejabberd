@@ -129,4 +129,22 @@ class Exception
             ], 422);
     }
 
+    /**
+     * Render a room invite already exists exception response.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
+     * @return \Illuminate\Http\Response
+     */
+    public static function roomInviteExistsException($room, $mobile)
+    {
+        return response()->json(
+            [
+                'error' => [
+                    'code' => 422,
+                    'message' => 'Invite to room_id '.$room.' for mobile number '.$mobile.' already exists.'
+                ]
+            ], 422);
+    }
+
 }
