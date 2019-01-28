@@ -45,7 +45,6 @@ class Handler
         return response()->json(
             [
                 'no_content' => [
-                    'code' => 200,
                     'data' => $response,
                 ]
             ]);
@@ -64,10 +63,7 @@ class Handler
 
         return response()->json(
             [
-                'response' => [
-                    'code' => 200,
-                    'data' => $response,
-                ]
+                    'data' => $response
             ]);
 
     }
@@ -84,11 +80,8 @@ class Handler
 
         return response()->json(
             [
-                'response' => [
-                    'code' => 200,
                     'data' => $dbResponse,
                     'message' => $ejResponse
-                ]
             ]);
 
     }
@@ -110,7 +103,6 @@ class Handler
                 return response()->json(
                 [
                     'error' => [
-                        'code' => 422,
                         'message' => 'Entry already exists.'
                     ]
                 ], 422);

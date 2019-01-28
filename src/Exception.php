@@ -19,7 +19,6 @@ class Exception
                 return response()->json(
                     [
                         'error' => [
-                            'code' => 422,
                             'message' => 'Entry already exists or in wrong format.'
                         ]
                     ], 422);
@@ -29,7 +28,6 @@ class Exception
                 return response()->json(
                     [
                         'error' => [
-                            'code' => 422,
                             'message' => 'Query error.'
                         ]
                     ], 422);
@@ -50,7 +48,6 @@ class Exception
         return response()->json(
             [
                 'error' => [
-                    'code' => 422,
                     'message' => $response
                 ]
             ], 422);
@@ -68,7 +65,6 @@ class Exception
         return response()->json(
             [
                 'error' => [
-                    'code' => 422,
                     'message' => 'Username already exists.'
                 ]
             ], 422);
@@ -87,7 +83,6 @@ class Exception
         return response()->json(
             [
                 'error' => [
-                    'code' => 422,
                     'message' => "Username doesn't exist."
                 ]
             ], 422);
@@ -105,7 +100,6 @@ class Exception
         return response()->json(
             [
                 'error' => [
-                    'code' => 422,
                     'message' => 'Room already exists.'
                 ]
             ], 422);
@@ -123,7 +117,6 @@ class Exception
         return response()->json(
             [
                 'error' => [
-                    'code' => 422,
                     'message' => 'Room doesnt exist.'
                 ]
             ], 422);
@@ -141,7 +134,6 @@ class Exception
         return response()->json(
             [
                 'error' => [
-                    'code' => 422,
                     'message' => 'Invite to room_id '.$room.' for mobile number '.$mobile.' already exists.'
                 ]
             ], 422);
