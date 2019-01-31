@@ -89,6 +89,23 @@ class Exception
     }
 
     /**
+     * Render a users mobile doesn't exists exception response.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
+     * @return \Illuminate\Http\Response
+     */
+    public static function userMobileDoesntExistsException()
+    {
+        return response()->json(
+            [
+                'error' => [
+                    'message' => "RSW User mobile number doesn't exist."
+                ]
+            ], 422);
+    }
+
+    /**
      * Render a room exists exception response.
      *
      * @param  \Illuminate\Http\Request $request
@@ -135,6 +152,23 @@ class Exception
             [
                 'error' => [
                     'message' => 'Invite to room_id '.$room.' for mobile number '.$mobile.' already exists.'
+                ]
+            ], 422);
+    }
+
+    /**
+     * Render wrong username or password.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
+     * @return \Illuminate\Http\Response
+     */
+    public static function userWrongCredentials()
+    {
+        return response()->json(
+            [
+                'error' => [
+                    'message' => 'Wrong login credentials.'
                 ]
             ], 422);
     }

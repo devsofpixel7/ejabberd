@@ -81,7 +81,7 @@ class Handler
         return response()->json(
             [
                     'data' => $dbResponse,
-                    'message' => $ejResponse
+                    'meta' => $ejResponse
             ]);
 
     }
