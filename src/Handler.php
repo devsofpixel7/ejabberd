@@ -75,13 +75,16 @@ class Handler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public static function extendedResponse($dbResponse, $ejResponse)
+    public static function extendedResponse($dbResponse, $ejKey, $ejResponse)
     {
 
         return response()->json(
             [
-                    'data' => $dbResponse,
-                    'meta' => $ejResponse
+                    'data' => [
+                        'message' => $dbResponse,
+                        $ejKey => $ejResponse
+                    ]
+
             ]);
 
     }
