@@ -95,12 +95,12 @@ class Exception
      * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
-    public static function userMobileDoesntExistsException()
+    public static function userMobileDoesntExistsException($mobile)
     {
         return response()->json(
             [
                 'error' => [
-                    'message' => "RSW User mobile number doesn't exist."
+                    'message' => "RSW User mobile number ".$mobile." doesn't exist."
                 ]
             ], 422);
     }
