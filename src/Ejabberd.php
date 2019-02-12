@@ -33,11 +33,11 @@ class Ejabberd implements JsonSerializable
         $this->user = env('EJABBERD_USER');
         $this->password = env('EJABBERD_PASSWORD');
         $this->domain = env('EJABBERD_DOMAIN');
-        $this->conference_domain =  env('EJABBERD_CONFERENCE_DOMAIN');
+        $this->conference_domain = env('EJABBERD_CONFERENCE_DOMAIN');
         $this->debug = env('EJABBERD_DEBUG');
 
     }
-    
+
     /**
      * @param IEjabberdCommand $command
      */
@@ -79,7 +79,7 @@ class Ejabberd implements JsonSerializable
      */
     public function roomCreate($room)
     {
-        return self::callApi('POST', 'create_room', ['name' => $room, 'service' => $this->conference_domain, 'host' => $this->domain],'roomCreate');
+        return self::callApi('POST', 'create_room', ['name' => $room, 'service' => $this->conference_domain, 'host' => $this->domain], 'roomCreate');
     }
 
     /**
@@ -97,7 +97,7 @@ class Ejabberd implements JsonSerializable
      */
     public function roomOptions($room)
     {
-        return self::callApi('POST', 'get_room_options', ['name' => $room, 'service' => $this->conference_domain] ,'roomOptions');
+        return self::callApi('POST', 'get_room_options', ['name' => $room, 'service' => $this->conference_domain], 'roomOptions');
     }
 
     /**
@@ -121,7 +121,7 @@ class Ejabberd implements JsonSerializable
      */
     public function usersConnected()
     {
-        return self::callApi( 'GET', 'connected_users', '', 'usersConnected');
+        return self::callApi('GET', 'connected_users', '', 'usersConnected');
     }
 
     /**
@@ -129,7 +129,7 @@ class Ejabberd implements JsonSerializable
      */
     public function roomsList()
     {
-        return self::callApi('GET', 'muc_online_rooms?host='.$this->domain, '', 'roomsList');
+        return self::callApi('GET', 'muc_online_rooms?host=' . $this->domain, '', 'roomsList');
     }
 
     /**
@@ -173,7 +173,7 @@ class Ejabberd implements JsonSerializable
      */
     public function userSessionsInfo($username)
     {
-        return self::callApi('POST', 'user_sessions_info', ['user' => $username , 'host' => $this->domain], 'userSessionsInfo');
+        return self::callApi('POST', 'user_sessions_info', ['user' => $username, 'host' => $this->domain], 'userSessionsInfo');
     }
 
     /**
@@ -183,7 +183,7 @@ class Ejabberd implements JsonSerializable
      */
     public function userRegisterOld($username, $password)
     {
-        return self::callApi('GET', 'register?user='.$username.'&password='.$password.'&host='.$this->domain,'','userRegister');
+        return self::callApi('GET', 'register?user=' . $username . '&password=' . $password . '&host=' . $this->domain, '', 'userRegister');
     }
 
     /**
@@ -193,7 +193,7 @@ class Ejabberd implements JsonSerializable
      */
     public function userRegister($username, $password)
     {
-        return self::callApi('POST', 'register', ['user'=> $username, 'password'=>$password, 'host'=>$this->domain],'userRegister');
+        return self::callApi('POST', 'register', ['user' => $username, 'password' => $password, 'host' => $this->domain], 'userRegister');
     }
 
     /**
@@ -202,7 +202,7 @@ class Ejabberd implements JsonSerializable
      */
     public function userUnregister($username)
     {
-        return self::callApi('POST', 'unregister', ['user' => $username, 'host' => $this->domain],  'userUnegister');
+        return self::callApi('POST', 'unregister', ['user' => $username, 'host' => $this->domain], 'userUnegister');
     }
 
     /**
@@ -231,7 +231,93 @@ class Ejabberd implements JsonSerializable
         return self::callApi('POST', 'send_direct_invitation', ['name' => $roomName, 'service' => $this->conference_domain, 'password' => '', 'reason' => $inviteReason, 'users' => $users], 'roomInviteUsers');
     }
 
-    
+
+    /*
+
+    POST /api/create_room_with_opts
+    {
+      "name": "room1",
+      "service": "muc.example.com",
+      "host": "localhost",
+      "options": [
+        {
+          "name": "members_only",
+          "value": "true"
+        }
+      ]
+    }
+
+     */
+
+    /**
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
+    public function roomCreateOptions($roomName, $optionName, $optionValue)
+    {
+        $options = ['name' => $optionName, 'value' => $optionValue];
+
+        //return ['name' => $roomName, 'service' => $this->conference_domain, 'host' => $this->domain, 'options' => [$options]];
+
+        return self::callApi('POST', 'create_room_with_opts', ['name' => $roomName, 'service' => $this->conference_domain, 'host' => $this->domain, 'options' => [$options]], 'roomCreateOptions');
+    }
+
+    /*
+    POST /api/change_room_option
+    {
+    "name": "room1",
+    "service": "muc.example.com",
+    "option": "members_only",
+    "value": "true"
+    }
+    */
+
+    /**
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
+    public function roomChangeOptions($roomName, $optionName, $optionValue)
+    {
+        $options = ['name' => $optionName, 'value' => $optionValue];
+
+        //return ['name' => $roomName, 'service' => $this->conference_domain, 'host' => $this->domain, 'options' => [$options]];
+
+        return self::callApi('POST', 'create_room_with_opts', ['name' => $roomName, 'service' => $this->conference_domain, 'host' => $this->domain, 'options' => [$options]], 'roomCreateOptions');
+    }
+
+
+    /**
+     * @param $userJid
+     * @param $userNick
+     * @param $roomName
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
+    public function roomSubscribeUser($userJid, $userNick, $roomName)
+    {
+        return self::callApi('POST', 'subscribe_room', ['nick' => $userNick, 'room' => $roomName, 'nodes' => 'urn:xmpp:mucsub:nodes:messages,urn:xmpp:mucsub:nodes:affiliations,urn:xmpp:mucsub:nodes:presence', 'user' => $userJid], 'roomSubscribeUser');
+    }
+
+
+    /**
+     * @param $userJid
+     * @param $userNick
+     * @param $roomName
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
+    public function roomUnsubscribeUser($userJid, $userNick, $roomName)
+    {
+        return self::callApi('POST', 'unsubscribe_room', ['room' => $roomName, 'user' => $userJid], 'roomUnsubscribeUser');
+    }
+
+
+    /**
+     * @param $room
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
+    public function roomSubscribers($room)
+    {
+        return self::callApi('POST', 'get_subscribers', ['name' => $room, 'service' => $this->conference_domain], 'roomSubscribers');
+    }
+
+
     /**
      * @param IEjabberdCommand $command
      * @return null|\Psr\Http\Message\StreamInterface
@@ -278,24 +364,26 @@ class Ejabberd implements JsonSerializable
      * @param IEjabberdCommand $command
      * @return null|\Psr\Http\Message\StreamInterface
      */
-    public function callApi($method, $url, $data , $command)
+    public function callApi($method, $url, $data, $command)
     {
         $client = new \GuzzleHttp\Client();
 
         try {
-            $res = $client->request($method, $this->api.$url, [
+            $res = $client->request($method, $this->api . $url, [
                 'headers' => [
-                    'Accept'     => 'application/json',
+                    'Accept' => 'application/json',
                     'Content-Type' => 'application/json'
                 ],
                 'json' => $data
             ]);
 
+            return json_decode($res->getBody());
+
             return \Ejabberd\Handler::regularResponse(json_decode($res->getBody(), JSON_PRETTY_PRINT));
 
         } catch (ClientException $e) {
-            if ($this->debug=='true') {
-               Log::info("Error occurred while executing the command " . $command . ", on url:".$url.".");
+            if ($this->debug == 'true') {
+                Log::info("Error occurred while executing the command " . $command . ", on url:" . $url . ".");
             }
 
             return \Ejabberd\Handler::noContentResponse(json_decode($e->getResponse()->getBody(true)));
@@ -307,9 +395,10 @@ class Ejabberd implements JsonSerializable
      * @param Object
      * @return null|\JsonSerializable
      */
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         return [
-            'status', 'code' , 'message', 'num_sessions'
+            'status', 'code', 'message', 'num_sessions'
         ];
     }
 
