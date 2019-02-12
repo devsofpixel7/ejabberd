@@ -261,15 +261,6 @@ class Ejabberd implements JsonSerializable
         return self::callApi('POST', 'create_room_with_opts', ['name' => $roomName, 'service' => $this->conference_domain, 'host' => $this->domain, 'options' => [$options]], 'roomCreateOptions');
     }
 
-    /*
-    POST /api/change_room_option
-    {
-    "name": "room1",
-    "service": "muc.example.com",
-    "option": "members_only",
-    "value": "true"
-    }
-    */
 
     /**
      * @return \Psr\Http\Message\StreamInterface|null
@@ -318,6 +309,8 @@ class Ejabberd implements JsonSerializable
     }
 
 
+
+
     /**
      * @param IEjabberdCommand $command
      * @return null|\Psr\Http\Message\StreamInterface
@@ -364,26 +357,24 @@ class Ejabberd implements JsonSerializable
      * @param IEjabberdCommand $command
      * @return null|\Psr\Http\Message\StreamInterface
      */
-    public function callApi($method, $url, $data, $command)
+    public function callApi($method, $url, $data , $command)
     {
         $client = new \GuzzleHttp\Client();
 
         try {
-            $res = $client->request($method, $this->api . $url, [
+            $res = $client->request($method, $this->api.$url, [
                 'headers' => [
-                    'Accept' => 'application/json',
+                    'Accept'     => 'application/json',
                     'Content-Type' => 'application/json'
                 ],
                 'json' => $data
             ]);
 
-            return json_decode($res->getBody());
-
             return \Ejabberd\Handler::regularResponse(json_decode($res->getBody(), JSON_PRETTY_PRINT));
 
         } catch (ClientException $e) {
-            if ($this->debug == 'true') {
-                Log::info("Error occurred while executing the command " . $command . ", on url:" . $url . ".");
+            if ($this->debug=='true') {
+               Log::info("Error occurred while executing the command " . $command . ", on url:".$url.".");
             }
 
             return \Ejabberd\Handler::noContentResponse(json_decode($e->getResponse()->getBody(true)));
@@ -395,10 +386,9 @@ class Ejabberd implements JsonSerializable
      * @param Object
      * @return null|\JsonSerializable
      */
-    public function jsonSerialize()
-    {
+    public function jsonSerialize() {
         return [
-            'status', 'code', 'message', 'num_sessions'
+            'status', 'code' , 'message', 'num_sessions'
         ];
     }
 
