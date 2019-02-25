@@ -308,7 +308,14 @@ class Ejabberd implements JsonSerializable
         return self::callApi('POST', 'get_subscribers', ['name' => $room, 'service' => $this->conference_domain], 'roomSubscribers');
     }
 
-
+    /**
+     * @param $room
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
+    public function userPasswordChange($user, $newpassword)
+    {
+        return self::callApi('POST', 'change_password', ['user' => $user, 'host' => $this->domain, 'newpass' => $newpassword], 'userChangePassword');
+    }
 
 
     /**
