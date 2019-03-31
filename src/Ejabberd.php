@@ -231,23 +231,7 @@ class Ejabberd implements JsonSerializable
         return self::callApi('POST', 'send_direct_invitation', ['name' => $roomName, 'service' => $this->conference_domain, 'password' => '', 'reason' => $inviteReason, 'users' => $users], 'roomInviteUsers');
     }
 
-
-    /*
-
-    POST /api/create_room_with_opts
-    {
-      "name": "room1",
-      "service": "muc.example.com",
-      "host": "localhost",
-      "options": [
-        {
-          "name": "members_only",
-          "value": "true"
-        }
-      ]
-    }
-
-     */
+    
 
     /**
      * @return \Psr\Http\Message\StreamInterface|null
@@ -315,6 +299,55 @@ class Ejabberd implements JsonSerializable
     public function userPasswordChange($user, $newpassword)
     {
         return self::callApi('POST', 'change_password', ['user' => $user, 'host' => $this->domain, 'newpass' => $newpassword], 'userChangePassword');
+    }
+
+
+    /*
+    POST /api/send_message
+    {
+      "type": "headline",
+      "from": "admin@localhost",
+      "to": "user1@localhost",
+      "subject": "Restart",
+      "body": "In 5 minutes"
+    }
+
+    HTTP/1.1 200 OK
+    ""
+
+        POST /api/send_message
+    {
+      "type": "headline",
+      "from": "admin@localhost",
+      "to": "user1@localhost",
+      "subject": "Restart",
+      "body": "In 5 minutes"
+    }
+
+    HTTP/1.1 200 OK
+    ""
+    /*
+
+    <message xml:lang='en' to='184-x8swh6877957161t8gpy65j4@conference.realsafeagent.com'
+    from='185-l44ij794@realsafeagent.com/240817921217435957023489394'
+    type='groupchat'
+    id='185-l44ij794-1553793765466'
+    xmlns='jabber:client'>
+
+    <body>alooooouui</body>
+
+    </message>
+    */
+
+
+    /**
+     * @param $room
+     * @return \Psr\Http\Message\StreamInterface|null
+     */
+    public function userSendMessage($from, $to, $body)
+    {
+        return self::callApi('POST', 'send_message', ['type' => 'groupchat', 'from' => $from.'@'.$this->domain, 'to' => $to.'@'.$this->conference_domain, 'subject' => 'RealSafeChat', 'body' => $body ], 'userSendMessage');
+        //return self::callApi('POST', 'send_message', ['type' => 'groupchat', 'from' => '10-32065r8l@ec2-54-159-73-228.compute-1.amazonaws.com', 'to' => $to.'@'.$this->conference_domain, 'subject' => $subject, 'body' => $body ], 'userSendMessage');
     }
 
 
